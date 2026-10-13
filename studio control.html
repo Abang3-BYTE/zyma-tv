@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Control</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Studio Control - Login</h1>
+    <div id="loginBox">
+        <input id="pass"
+        type="password" placeholder="Enter studio password (admin123)">
+
+        <button
+        onclick="login()">Login</button>
+    </div>
+
+    <div id="controlBox"
+    style="display: none">
+<h2>Add Program</h2>
+<input  id="title"
+placeholder="Program Title">
+<input id="time" placeholder="Time e.g 8:00 AM">
+<select id="status"><option>scheduled</option><option>live</option></select>
+
+<button onclick="addProgram()">Add Program</button>
+
+<h2 style="margin-top: 30">Upload Replay Video</h2>
+
+<input type="file" id="videoFile">
+
+<button onclick="uploadVideo()">Upload Video</button>
+</div>
+
+
+<script>
+    const API = 'http://localhost:5000';
+    function login() {
+        if(document.getElementById('pass').value === 'admin123'){
+
+            document.getElementById('loginBox').style.display='none';
+
+            document.getElementById('controlBox').style.display='block';
+          } else alert('wrong password');
+        }
+        function addProgram(){
+            fetch(API+'/api/programs', {
+                method: 'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    title:
+                    document.getElementById('title').value,
+                    time:
+                    document.getElementById('time').value,
+                    status:
+                    document.getElementById('status').value
+                })
+            }).then(()=>alert('Added!'));
+        }
+        function uplaodVideo(){
+            const file = document.getElementById('videoFile').files[0];
+            const form = new FormData();
+            form.append('video', file);
+            fetch(API+'/api/upload', {method: 'POST', body:form}).then(r=>r.json()).then(()=>alert('Video upload!'));
+        }
+</script>
+</body>
+</html>

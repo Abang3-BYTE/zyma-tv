@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ZYMA TV - Admin Studio</title>
+<style>
+body{font-family:Arial;background:#111;color:white;padding:20px;max-width:800px;margin:auto}
+input,button{padding:10px;margin:5px;border-radius:5px;border:none;width:95%}
+button{background:#c00;color:white;font-weight:bold;cursor:pointer}
+.card{background:#1a1a1a;padding:20px;border-radius:12px;margin:20px 0}
+#adminPanel{display:none}
+</style>
+</head>
+<body>
+<h1>ZYMA TV - ADMIN LOGIN</h1>
+
+<div id="loginDiv" class="card">
+  <h3>Enter Admin Password</h3>
+  <input type="password" id="pass" placeholder="Password (zyma2024)">
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="adminPanel">
+  <div class="card">
+    <h3>🔴 Update Live Now</h3>
+    <input id="liveTitleInput" placeholder="Live Title: e.g Evening News">
+    <input id="liveUrlInput" placeholder="YouTube Embed URL">
+    <button onclick="updateLive()">Go LIVE</button>
+  </div>
+
+  <div class="card">
+    <h3>📅 Add Program to Schedule</h3>
+    <input id="pTime" placeholder="Time e.g 08:00 PM">
+    <input id="pTitle" placeholder="Program Title">
+    <button onclick="addProgram()">Add Program</button>
+  </div>
+
+  <div class="card">
+    <h3>📤 Upload Video</h3>
+    <input type="file" id="videoFile">
+    <button onclick="uploadVideo()">Upload</button>
+    <p id="uploadStatus"></p>
+  </div>
+
+  <div class="card">
+    <h3>Live Chat Monitor</h3>
+    <div id="chatBoxAdmin" style="background:black;height:150px;overflow-y:auto;padding:10px"></div>
+  </div>
+</div>
+
+<script>
+const API = "http://127.0.0.1:5000";
+
+async function login(){
+  let res = await fetch(API+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:document.getElementById('pass').value})});
+  if(res.ok){ document.getElementById('loginDiv').style.display='none'; document.getElementById('adminPanel').style.display='block'; alert("Welcome Boss!"); }
+  else alert("Wrong password!");
+}
+async function updateLive(){
+  await fetch(API+'/api/admin/update_live',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:document.getElementById('liveTitleInput').value, streamUrl:document.getElementById('liveUrlInput').value})});
+  alert("LIVE Updated!");
+}
+async function addProgram(){
+  await fetch(API+'/api/admin/add_program',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({time:document.getElementById('pTime').value, title:document.getElementById('pTitle').value, status:"scheduled"})});
+  alert("Program Added!");
+}
+async function uploadVideo(){
+  let file = document.getElementById('videoFile').files[0];
+  if(!file) return alert("Choose file");
+  let fd = new FormData(); fd.append('file', file);
+  let res = await fetch(API+'/api/upload',{method:'POST',body:fd});
+  let data = await res.json();
+  document.getElementById('uploadStatus').innerText = "Uploaded: " + data.filename + " - Use URL: " + data.url;
+}
+
+async function loadChatAdmin(){
+  let res = await fetch(API+'/api/chat');
+  let chats = await res.json();
+  let box = document.getElementById('chatBoxAdmin');
+  if(box) box.innerHTML = chats.map(c=>`<div><b>${c.user}:</b> ${c.text}</div>`).join('');
+}
+setInterval(loadChatAdmin,2000);
+</script>
+</body>
+</html>
