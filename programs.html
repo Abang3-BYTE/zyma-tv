@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Programs - ZYMA TV</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+         <style>
+            body {
+                margin: 0;
+                font-family: Arial;
+                background: #c00;
+                color: white;
+            }
+
+            header {
+                background: #c00;
+                padding: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            header img {
+                width: 60px;
+                background: white;
+                border-radius: 10px;
+                padding: 5px;
+            }
+
+            nav a {
+                color: white;
+                margin: 0 10px;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .card {
+                background: #222;
+                border-radius: 15px;
+                padding: 15px;
+                border-left: 4px solid #c00;
+            }
+
+            .card h3 {
+                color: #c00;
+            }
+
+            .btn {
+                background: #c00;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="zyma.png">
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="programs.html">programs</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <h1 style="text-align: center">Our Programs</h1>
+
+        <div class="grid">
+            <div class="card">
+                <h3>☀️ ZYMA Morning Show</h3>
+                <p>6AM - 10PM Daily. News, gist & entertainment from Abuja.</p>
+                <button class="btn">Watch Live</button>
+            </div>
+
+            <div class="card">
+                <h3>📰 Abuja News Hour</h3>
+                <p>7PM Daily. Breaking news inside FCT and Nigeria.</p>
+                <button class="btn">Watch Live</button>
+            </div>
+
+            <div class="card">
+                <h3>🎤 Studio Live</h3>
+                <p>Book our studio for your music video, podcast, intervie.w</p>
+            <button class="btn">Book Now</button>
+            </div>
+            <div class="card">
+                <h3>🎬 Entertainment Nigeria</h3>
+                <p>Fri 9PM. Latest Nigeria Movies, celeb gist.</p>
+                <button class="btn">Watch Live</button>
+            </div>
+        </div>
+    </body>
+</html>

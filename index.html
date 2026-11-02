@@ -1,39 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYMA TV - LIVE | Abuja</title>
-</a>
+<html>
+    <head>
+        <title>ZYMA TV - Abuja No.11 Studio</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #111;
+            color: white;
+            text-align: center;
+        }
 
-<header>
-    <img src="zyma_studio_logo.png" alt="ZYMA Studio Logo"  style="width: 120px">
-</header>
-    <style>
-        body{margin:0;font-family:Arial;background:#0a0a0a;color:white}
-        header{background:#c00;padding:15px 25px;display:flex;align-items:center;gap:15px;justify-content:space-between}
-        header h1{margin:0;font-size:22px;letter-spacing:2px}
-        .live-badge{background:white;color:#c00;padding:5px 15px;border-radius:20px;font-weight:bold;animation:blink 1s infinite}
-        @keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
-        .player-box{padding:20px;max-width:900px;margin:auto}
-        iframe{width:100%;height:500px;border-radius:12px;border:2px solid #333}
-        #liveTitle{color:#ffcc00;margin-top:15px}
-        .schedule{max-width:900px;margin:20px auto;background:#1a1a1a;padding:20px;border-radius:12px}
-        .program{padding:12px;border-bottom:1px solid #333;display:flex;justify-content:space-between}
-        .program.live{color:#00ff00;font-weight:bold}
-        img{height:40px}
-    </style>
-</head>
-<body>
-<div class="schedule">
-  <h3>🔴 Live Chat</h3>
-  <div id="chatBox" style="height:200px;overflow-y:auto;background:#000;padding:10px;border-radius:8px"></div>
-  <div style="display:flex;gap:5px;margin-top:10px">
-    <input id="chatName" placeholder="Your name" style="width:30%">
-    <input id="chatText" placeholder="Type message..." style="flex:1">
-    <button onclick="sendChat()">Send</button>
-  </div>
-</div>
-    <script src="app.js"></script>
-</body>
+            header {
+                background: #c00;
+                padding: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+                header img {
+                    width: 60px;
+                    background: white;
+                    border-radius: 10px;
+                    padding: 5px;
+                }
+
+                    nav a {
+                        color: white;
+                        margin: 0px 10px;
+                        text-decoration: none;
+                        font-weight: bold;
+                }
+
+                        .hero {
+                            padding: 40px 20px;
+                        }
+
+                            .video-box {
+                                max-width: 700px;
+                                margin: 20px auto;
+                                background: black;
+                                border-radius: 15px;
+                                overflow: hidden;
+                                border: 3px solid #c00
+                            }
+                            
+
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <img src="zyma.png" alt="tv-studio-app">
+            <nav><a href="index.html">Home</a>
+                <a href="programs.html">Program</a>
+                <a href="studio.html">Studio Login</a>
+            </nav>
+        </header>
+
+        <div class="hero">
+            <h1>Welcome to ZYMA TV</h1>
+            <p>Abuja's Hottest Tv studio - Entertainment | News | Shows</p>
+            <div class="video-box">
+                <video id="mainVideo" controls width="100%" poster="zyma.png"></video>
+            </div>
+            <h3>Live Programs</h3>
+        </div>
+        <script>
+            fetch('http://localhost:5000/videos').then(r=>r.json()).then(videos=>{
+                if(videos.length>0)
+                document.getElementById('mainVideo').src='http://localhost:5000'+vidoes[0].url
+            })
+        </script>
+    </body>
 </html>
